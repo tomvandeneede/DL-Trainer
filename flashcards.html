@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Russian flashcards</title>
+<link rel="stylesheet" href="src/ui.css">
+<style>
+  main { max-width: 640px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 0 0 16px; }
+  .tabs { display: flex; gap: 6px; margin-bottom: 14px; }
+  .tabs button { flex: 1; }
+  .tabs button[aria-selected="true"] { background: var(--info); border-color: var(--info); color: #fff; }
+  .settings { display: grid; grid-template-columns: auto 1fr; gap: 8px 12px; align-items: center; margin-bottom: 18px; }
+  .settings label { color: var(--muted); font-size: 12px; text-transform: uppercase; letter-spacing: .04em; }
+  .settings select { width: 100%; }
+  .settings .check { grid-column: 2; display: flex; gap: 6px; align-items: center; color: var(--fg); text-transform: none; letter-spacing: 0; font-size: 13px; }
+  .hidden { display: none !important; }
+
+  .scene { perspective: 1200px; margin: 0 auto; }
+  .card { position: relative; width: 100%; min-height: 260px; cursor: pointer; transform-style: preserve-3d;
+          transition: transform .45s cubic-bezier(.2,.7,.2,1); outline: none; }
+  .card:focus-visible .face { border-color: var(--info); }
+  .card.flipped { transform: rotateY(180deg); }
+  .face { position: absolute; inset: 0; backface-visibility: hidden; -webkit-backface-visibility: hidden;
+          border: 2px solid var(--line); border-bottom-width: 5px; border-radius: 20px; background: var(--bg);
+          display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 28px 22px; }
+  .face.back { transform: rotateY(180deg); background: var(--soft); }
+  .lang { position: absolute; top: 14px; left: 18px; font: 700 11px system-ui, sans-serif; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+  .text { font-size: 28px; line-height: 1.3; font-weight: 600; overflow-wrap: anywhere; }
+  .text.long { font-size: 21px; }
+  .text[lang="ru"] { color: var(--fg); }
+  .extra { margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+  .hint { position: absolute; bottom: 12px; font-size: 12px; color: var(--muted); }
+
+  .controls { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-top: 16px; }
+  .controls .count { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .controls .next { padding: 12px 28px; font-size: 15px; }
+  .empty { text-align: center; color: var(--muted); padding: 40px 10px; border: 2px dashed var(--line); border-radius: 20px; }
+  .keys { text-align: center; color: var(--muted); font-size: 12px; margin-top: 14px; }
+  kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font: 11px system-ui, sans-serif; }
+  @media (max-width: 480px) { .text { font-size: 23px; } .text.long { font-size: 18px; } .settings { grid-template-columns: 1fr; } .settings .check { grid-column: 1; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Russian flashcards</h1>
+
+  <div class="tabs" role="tablist">
+    <button role="tab" id="tabWords" aria-selected="true">Words</button>
+    <button role="tab" id="tabSentences" aria-selected="false">Guidebook sentences</button>
+  </div>
+
+  <div class="settings">
+    <label for="direction">Direction</label>
+    <select id="direction">
+      <option value="en-ru">English → Russian</option>
+      <option value="ru-en">Russian → English</option>
+      <option value="random">Random</option>
+    </select>
+
+    <label for="section" class="gb">Up to section</label>
+    <select id="section" class="gb"></select>
+
+    <label for="unit" class="gb">Up to unit</label>
+    <select id="unit" class="gb"></select>
+
+    <label class="check gb"><input type="checkbox" id="onlyUnit"> This unit only</label>
+  </div>
+
+  <div id="empty" class="empty hidden"></div>
+
+  <div id="practice">
+    <div class="scene">
+      <div class="card" id="card" role="button" tabindex="0" aria-label="Flip card">
+        <div class="face front"><span class="lang" id="frontLang"></span><div class="text" id="frontText"></div><span class="hint">click to flip</span></div>
+        <div class="face back"><span class="lang" id="backLang"></span><div class="text" id="backText"></div><div class="extra" id="backExtra"></div></div>
+      </div>
+    </div>
+    <div class="controls">
+      <span class="count" id="count"></span>
+      <button class="primary next" id="next">Next</button>
+      <button id="shuffle" title="Shuffle again">Shuffle</button>
+    </div>
+    <div class="keys"><kbd>space</kbd> flip · <kbd>→</kbd> next</div>
+  </div>
+</main>
+<script src="src/flashcards.js"></script>
+</body>
+</html>

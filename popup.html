@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Duolingo Russian Word List</title>
+<link rel="stylesheet" href="src/ui.css">
+<style>
+  body { width: 320px; padding: 14px 16px 16px; }
+  h1 { font-size: 16px; margin: 0 0 10px; }
+  .stat { margin: 8px 0 12px; line-height: 1.5; }
+  .stat b { font-size: 22px; color: var(--accent-strong); }
+  .row { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 6px; }
+  .row button { flex: 1 1 auto; }
+  select { width: 100%; margin-bottom: 4px; }
+  hr { border: 0; border-top: 2px solid var(--line); margin: 14px 0 10px; }
+  h2 { font-size: 14px; margin: 0; }
+  .msg { min-height: 18px; color: var(--muted); font-size: 12px; margin-top: 8px; }
+</style>
+</head>
+<body>
+  <h1>Russian word list</h1>
+  <select id="course" hidden></select>
+  <div class="stat" id="stat">Loading…</div>
+  <div class="row"><button class="primary" id="fetch">Fetch all from Duolingo</button></div>
+  <div class="row">
+    <button id="export">Save JSON</button>
+    <button id="exportAs">Save as…</button>
+  </div>
+  <div class="row"><button id="list">View &amp; edit list</button></div>
+  <hr>
+  <h2>Guidebook sentences</h2>
+  <div class="stat" id="gbStat">–</div>
+  <div class="row">
+    <button class="primary" id="gbFetch">Fetch all units</button>
+    <button id="gbExport">Save JSON</button>
+  </div>
+  <hr>
+  <div class="row"><button class="primary" id="flash">Practise with flashcards</button></div>
+  <div class="msg" id="msg"></div>
+  <script src="src/popup.js"></script>
+</body>
+</html>

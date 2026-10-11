@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Russian word list</title>
+<link rel="stylesheet" href="src/ui.css">
+<style>
+  main { max-width: 1000px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 22px; margin: 0 0 4px; }
+  .sub { color: var(--muted); margin-bottom: 16px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 14px; }
+  .bar input[type=search] { flex: 1 1 220px; }
+  table { width: 100%; border-collapse: collapse; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  th { font-size: 12px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); position: sticky; top: 0; background: var(--bg); }
+  td.word input { width: 100%; font-weight: 600; border-color: transparent; background: transparent; padding: 3px 6px; }
+  td.word input:focus { border-color: var(--info); background: var(--bg); }
+  .forms { color: var(--muted); }
+  .pill { font-size: 11px; padding: 1px 7px; border-radius: 999px; border: 1px solid currentColor; white-space: nowrap; }
+  .s-lemma { color: var(--accent-strong); } .s-inflected { color: var(--info); } .s-manual { color: var(--fg); }
+  .s-unknown { color: var(--warn); } .s-error { color: var(--bad); } .s-pending { color: var(--muted); }
+  .legend { color: var(--muted); font-size: 12px; margin-top: 14px; }
+  @media (max-width: 640px) { .hide-sm { display: none; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Russian word list</h1>
+  <div class="sub" id="sub">Loading…</div>
+  <div class="bar">
+    <select id="course" hidden></select>
+    <input type="search" id="q" placeholder="Search…">
+    <select id="filter">
+      <option value="">All words</option>
+      <option value="inflected">Converted to base form</option>
+      <option value="unknown">Not found on Wiktionary</option>
+      <option value="manual">Edited by hand</option>
+    </select>
+    <button class="primary" id="export">Save JSON</button>
+    <button id="retry">Retry not found</button>
+    <button class="danger" id="clear">Clear list</button>
+  </div>
+  <table>
+    <thead><tr><th style="width:24%">Base form</th><th class="hide-sm">Part of speech</th><th>Translation</th><th class="hide-sm">Forms on Duolingo</th><th>Status</th></tr></thead>
+    <tbody id="rows"></tbody>
+  </table>
+  <p class="legend">Click a base form to correct it yourself; the change applies to all forms in that row, and duplicates are merged automatically.</p>
+</main>
+<script src="src/words.js"></script>
+</body>
+</html>
